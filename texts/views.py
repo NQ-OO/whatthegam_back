@@ -2,19 +2,20 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.fields import CurrentUserDefault
 from rest_framework import status
 from .models import Text
 from .serializers import *
 from whatthegam.models import School
 
 class TextListAPIView(APIView):
-    serializer_class = TextCreateSerializer
+
     def get(self, request, place_pk):
+
         school = School.objects.get(pk=place_pk)
         texts = Text.objects.filter(written_place=school)
         if texts:
             serializer = TextSerializer(texts, many=True)
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, place_pk):
