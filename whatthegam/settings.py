@@ -49,8 +49,7 @@ INSTALLED_APPS += [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'rest_auth.registration',
-    
+    'rest_auth.registration',   
 ]
 
 SITE_ID = 1

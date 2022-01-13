@@ -7,5 +7,5 @@ from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer) :
   class Meta :
-    model = Profile # quest 모델 사용
+    model = Profile 
     fields = '__all__'
