@@ -10,7 +10,6 @@ from whatthegam.models import Place
 class TextListAPIView(APIView):
 
     def get(self, request, place_pk):
-
         place = Place.objects.get(pk=place_pk)
         texts = Text.objects.filter(written_place=place)
         if texts:
@@ -21,15 +20,14 @@ class TextListAPIView(APIView):
         try:    
             place = Place.objects.get(pk=place_pk)
         except:
-
             place_serializer = PlaceSerializer(data=request.data)
             if place_serializer.is_valid():
                 place_serializer.save()
-
         try:
             place = Place.objects.get(pk=place_pk)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
+            
         if place:
             serializer = TextCreateSerializer(data=request.data)
             if serializer.is_valid():
