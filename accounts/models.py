@@ -9,7 +9,7 @@ from whatthegam.models import School
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) 
-    school = models.ForeignKey(School, on_delete=models.CASCADE, default='1')  
+    school = models.ForeignKey(School, on_delete=models.CASCADE, default='1', null=True)  
     year = models.IntegerField(null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
