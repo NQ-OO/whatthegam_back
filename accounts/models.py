@@ -3,13 +3,13 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from whatthegam.models import School
+from whatthegam.models import Place
 
 # Create your models here.
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) 
-    school = models.ForeignKey(School, on_delete=models.CASCADE, default='1', null=True)  
+    # school = models.ForeignKey(Place, on_delete=models.CASCADE, default='1', null=True)  
     year = models.IntegerField(null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
