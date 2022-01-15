@@ -7,24 +7,31 @@ from .models import Text
 from .serializers import *
 from whatthegam.models import Place
 
+
 class TextListAPIView(APIView):
 
-    def get(self, request, place_pk):
-        place = Place.objects.get(pk=place_pk)
+    def get(self, request, map_id):
+        place = Place.objects.get(map_id=map_id)
         texts = Text.objects.filter(written_place=place)
         if texts:
             serializer = TextSerializer(texts, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def post(self, request, place_pk):
+    def post(self, request, map_id):
         try:    
-            place = Place.objects.get(pk=place_pk)
+            place = Place.objects.get(map_id=map_id)
         except:
-            place_serializer = PlaceSerializer(data=request.data)
+            context = {}
+            context['map_id'] = request.data['map_id']
+            context['name'] = request.data['name']
+
+            place_serializer = PlaceSerializer(data=context)
             if place_serializer.is_valid():
                 place_serializer.save()
         try:
-            place = Place.objects.get(pk=place_pk)
+            place = Place.objects.get(map_id=map_id)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
             
@@ -38,8 +45,8 @@ class TextListAPIView(APIView):
 
 class TextDetailAPIView(APIView):
 
-    def put(self, request, place_pk, text_pk):
-        place = Place.objects.get(id=place_pk)
+    def put(self, request, map_id, text_pk):
+        place = Place.objects.get(map_id=map_id)
         text = get_object_or_404(Text, id=text_pk)
         serializer = TextCreateSerializer(text, data=request.data)
         if serializer.is_valid():
@@ -47,7 +54,7 @@ class TextDetailAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializers.errors, status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, place_pk, text_pk):
+    def delete(self, request, map_id, text_pk):
         text = Text.objects.get(id=text_pk)
         text.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
