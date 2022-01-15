@@ -13,12 +13,14 @@ from rest_framework import viewsets
 class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
 
     def list(self, request):
+        print(request.POST)
+        print(request.data)
+        print(request.body)
         map_id = request.data['map_id']
         try:
             place = Place.objects.get(map_id=map_id)
 
         except:
-            request.method = 'POST'
             serializer = PlaceSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
