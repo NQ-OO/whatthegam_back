@@ -51,7 +51,13 @@ INSTALLED_APPS += [
     'allauth.socialaccount',
     'rest_auth.registration',
     'texts',  
+    'users',
 ]
+
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'sutdent_number'
+
 
 SITE_ID = 1
 
@@ -149,3 +155,10 @@ REST_FRAMEWORK = {
 # REST_AUTH_REGISTER_SERIALIZERS = {
 #     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer'
 # }
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+}
+
+
+AUTH_USER_MODEL = 'users.CustomUser'

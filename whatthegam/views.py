@@ -13,9 +13,10 @@ from rest_framework import viewsets
 class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
 
     def list(self, request):
+        map_id = request.data['map_id']
 
         try:
-            map_id = request.data['map_id']
+            
             place = Place.objects.get(map_id=map_id)
 
         except:

@@ -1,28 +1,28 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from .serializers import ProfileSerializer
-from .models import Profile
-from rest_framework.views import APIView  
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-# Create your views here.
+# from django.shortcuts import render
+# from rest_framework import viewsets
+# from .serializers import ProfileSerializer
+# from .models import Profile
+# from rest_framework.views import APIView  
+# from django.contrib.auth.models import User
+# from django.shortcuts import get_object_or_404
+# from rest_framework.response import Response
+# # Create your views here.
 
 
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+# class ProfileViewSet(viewsets.ModelViewSet):
+#     queryset = Profile.objects.all()
+#     serializer_class = ProfileSerializer
     
-    def update(self, request, pk) :
-        user = User.objects.get(id = pk)
-        queryset = Profile.objects.get(user_id = user.id)
-        queryset.year = request.data.__getitem__('year')
-        serializer = ProfileSerializer(queryset, data=request.data)
-        print(serializer) 
-        if serializer.is_valid():
-            serializer.save(year = queryset.year)
-        result = serializer.data
-        return Response(result)
+#     def update(self, request, pk) :
+#         user = User.objects.get(id = pk)
+#         queryset = Profile.objects.get(user_id = user.id)
+#         queryset.year = request.data.__getitem__('year')
+#         serializer = ProfileSerializer(queryset, data=request.data)
+#         print(serializer) 
+#         if serializer.is_valid():
+#             serializer.save(year = queryset.year)
+#         result = serializer.data
+#         return Response(result)
     
     
 
