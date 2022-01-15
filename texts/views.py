@@ -49,10 +49,10 @@ class TextListAPIView(APIView):
                                 x_axis=round(random.uniform(0,100), 2),
                                 y_axis=round(random.uniform(0,100), 2))
             
-        all_texts = Text.objects.filter(written_place=place)
-        if all_texts:
-            text_seri = TextSerializer(all_texts, many=True)
-            return Response(text_seri.data, status=status.HTTP_201_CREATED)
+        # all_texts = Text.objects.filter(written_place=place)
+        # if all_texts:
+        #     text_seri = TextSerializer(all_texts, many=True)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

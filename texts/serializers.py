@@ -17,7 +17,7 @@ class TextSerializer(serializers.ModelSerializer):
         fields = ('id', 'content', 'created_dt', 'x_axis', 'y_axis', 'author', 'written_place', 'author_year')
     
     def get_author_year(self, obj):
-        return obj.author.profile.year
+        return obj.author.year
 
 
 class TextCreateSerializer(serializers.ModelSerializer):
@@ -28,4 +28,4 @@ class TextCreateSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'content', 'created_dt', 'x_axis', 'y_axis', 'spin_rate', 'author_year')
 
     def get_author_year(self, obj):
-        return obj.author.profile.year
+        return obj.author.year
