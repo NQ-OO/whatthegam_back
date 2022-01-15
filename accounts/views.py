@@ -17,10 +17,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
         user = User.objects.get(id = pk)
         queryset = Profile.objects.get(user_id = user.id)
         queryset.year = request.data.__getitem__('year')
-        # print(request.data.__getitem__('year'))
-        serializer = ProfileSerializer(queryset, many=False) 
-        # print('queryset.count:', queryset.count)
-        result = { 'Profile' : serializer.data}
+        serializer = ProfileSerializer(queryset, data=request.data)
+        print(serializer) 
+        if serializer.is_valid():
+            serializer.save(year = queryset.year)
+        result = serializer.data
         return Response(result)
     
     
