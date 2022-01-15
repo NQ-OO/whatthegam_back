@@ -15,7 +15,7 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):   
-        return f'id={self.id}, user_id={self.user.id}, school={self.school}, year={self.year}'
+        return f'id={self.id}, user_id={self.user.id}, year={self.year}'
 
     def update_date(self): 
         self.updated_at = timezone.now()

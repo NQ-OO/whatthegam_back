@@ -43,7 +43,6 @@ class TextListAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
 class TextDetailAPIView(APIView):
 
     def put(self, request, map_id, text_pk):
