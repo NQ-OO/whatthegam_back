@@ -21,27 +21,26 @@ class TextListAPIView(APIView):
             return Response(msg, status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request, map_id):
-        try:    
-            place = Place.objects.get(map_id=map_id)
-        except:
-            context = {}
-            context['map_id'] = request.data['map_id']
-            context['name'] = request.data['name']
+        # try:    
 
-            place_serializer = PlaceSerializer(data=context)
-            if place_serializer.is_valid():
-                place_serializer.save()
-        try:
+        # except:
+        #     context = {}
+        #     context['map_id'] = request.data['map_id']
+        #     context['name'] = request.data['name']
+
+        #     place_serializer = PlaceSerializer(data=context)
+        #     if place_serializer.is_valid():
+        #         place_serializer.save()
+        # try:
+        #     place = Place.objects.get(map_id=map_id)
+        # except:
             place = Place.objects.get(map_id=map_id)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-            
-        if place:
-            serializer = TextCreateSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save(author=request.user, written_place=place)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            if place:
+                serializer = TextCreateSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save(author=request.user, written_place=place)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class TextDetailAPIView(APIView):
 

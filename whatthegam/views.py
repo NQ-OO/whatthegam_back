@@ -24,15 +24,13 @@ class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
             if serializer.is_valid():
                 serializer.save()
             
-            Place.objects.get(map_id=map_id)
-            
         return HttpResponseRedirect(reverse('texts:text_list', args=[map_id])) 
 
 
 
 
 
-        
+
             #     return Response(serializer.data, status=status.HTTP_201_CREATED)
             # else:
             #     return Response(status=status.HTTP_400_BAD_REQUEST)
