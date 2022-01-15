@@ -30,6 +30,6 @@ urlpatterns = [
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
     # path('rest-auth/profile/', include('accounts.urls')),
     path('api/token/', obtain_auth_token, name = 'obtain-token'), #해당 username 의 token 을 확인할 수 있는 url
-    path('<str:map_id>/texts/', include('texts.urls')),
-    path('name/', views.PlaceAPIView.as_view({'get':'list'})),
+    path('<str:map_id>/', include('texts.urls')),
+    path('name/', views.PlaceAPIView.as_view({'post':'list'})),
 ]

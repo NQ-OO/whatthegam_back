@@ -9,6 +9,7 @@ class Text(models.Model):
     written_place = models.ForeignKey(Place, on_delete=models.SET_NULL, related_name='texts', null=True) #작성 장소
     x_axis = models.FloatField(default=0.0) # 보드 상의 x축 위치
     y_axis = models.FloatField(default=0.0) # 보드 상의 y축 위치
+    spin_rate = models.FloatField(default=0.0)
 
 
     def __str__(self):
