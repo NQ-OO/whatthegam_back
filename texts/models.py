@@ -8,9 +8,11 @@ class Text(models.Model):
     content = models.TextField() #텍스트 내용
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True) #작성자
     created_dt = models.DateTimeField(auto_now=True) #작성 시간
-    written_place = models.ForeignKey(Place, on_delete=models.SET_NULL, null=True) #작성 장소
+    written_place = models.ForeignKey(Place, on_delete=models.SET_NULL, related_name='texts', null=True) #작성 장소
     x_axis = models.FloatField(default=0.0) # 보드 상의 x축 위치
     y_axis = models.FloatField(default=0.0) # 보드 상의 y축 위치
+    spin_rate = models.FloatField(default=0.0)
+
 
     def __str__(self):
         return self.content

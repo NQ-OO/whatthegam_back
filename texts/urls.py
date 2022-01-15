@@ -4,6 +4,7 @@ from texts import views
 app_name = 'texts'
 
 urlpatterns = [
-    path('', views.TextListAPIView.as_view(), name='text_list'),
-    path('<int:text_pk>/', views.TextDetailAPIView.as_view(), name='text_detail')
+    path('count/', views.TextCountAPIView.as_view(), name='text_count'),
+    path('texts/', views.TextListAPIView.as_view(), name='text_list'),
+    path('texts/<int:text_pk>/', views.TextDetailAPIView.as_view(), name='text_detail')
 ]
