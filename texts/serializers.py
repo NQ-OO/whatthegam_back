@@ -25,7 +25,7 @@ class TextCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Text
-        fields = ('id', 'content', 'created_dt', 'x_axis', 'y_axis', 'author_year')
+        fields = ('id', 'author', 'content', 'created_dt', 'x_axis', 'y_axis', 'author_year')
 
     def get_author_year(self, obj):
         return obj.author.profile.year

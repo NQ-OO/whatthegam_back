@@ -17,7 +17,8 @@ class TextListAPIView(APIView):
             serializer = TextSerializer(texts, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            msg = {"msg": "낙서가 없는 보드입니다!"}
+            return Response(msg, status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request, map_id):
         try:    
