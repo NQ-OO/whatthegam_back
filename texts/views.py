@@ -6,7 +6,7 @@ from rest_framework import status
 from .models import Text
 from .serializers import *
 from whatthegam.models import Place
-
+import random
 
 class TextCountAPIView(APIView):
 
@@ -43,9 +43,17 @@ class TextListAPIView(APIView):
         if place:
             serializer = TextCreateSerializer(data=request.data)
             if serializer.is_valid():
-                serializer.save(author=request.user, written_place=place)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+                serializer.save(author=request.user,
+                                written_place=place,
+                                spin_rate=round(random.uniform(0, 360), 2),
+                                x_axis=round(random.uniform(0,100), 2),
+                                y_axis=round(random.uniform(0,100), 2))
+            
+        all_texts = Text.objects.filter(written_place=place)
+        if all_texts:
+            text_seri = TextSerializer(all_texts, many=True)
+            return Response(text_seri.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class TextDetailAPIView(APIView):
@@ -64,7 +72,4 @@ class TextDetailAPIView(APIView):
         text.delete()
         msg = {'msg':"낙서가 삭제되었습니다!"}
         return Response(msg, status=status.HTTP_204_NO_CONTENT)
-
-
-
 
