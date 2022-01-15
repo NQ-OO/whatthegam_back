@@ -13,9 +13,8 @@ from rest_framework import viewsets
 class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
 
     def list(self, request):
-
+        map_id = request.data['map_id']
         try:
-            map_id = request.data['map_id']
             place = Place.objects.get(map_id=map_id)
 
         except:
@@ -24,34 +23,5 @@ class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
             if serializer.is_valid():
                 serializer.save()
             
-        return HttpResponseRedirect(reverse('texts:text_list', args=[map_id])) 
-
-
-
-
-
-
-            #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-            # else:
-            #     return Response(status=status.HTTP_400_BAD_REQUEST)
-        # return HttpResponseRedirect(reverse('texts:', args=(request.data['map_id'])))
-    
-
-
-    # def post(self, request):
-    #     print("debug")
-    #     print(request.data)
-    #     print(request.method)
-    #     serializer = PlaceSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         print("debug#2")
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-        
-            
+        return HttpResponseRedirect(reverse('texts:text_count', args=[map_id])) 
 
