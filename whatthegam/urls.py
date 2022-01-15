@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
 from accounts.views import ProfileViewSet
+from whatthegam import views
 
 router = routers.DefaultRouter()
 router.register('profiles', ProfileViewSet)
@@ -29,5 +30,6 @@ urlpatterns = [
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
     # path('rest-auth/profile/', include('accounts.urls')),
     path('api/token/', obtain_auth_token, name = 'obtain-token'), #해당 username 의 token 을 확인할 수 있는 url
-    path('<int:place_pk>/texts/', include('texts.urls'))
+    path('<int:map_id>/texts/', include('texts.urls')),
+    path('', views.PlaceAPIView.as_view({'get':'list'})),
 ]
