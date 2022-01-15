@@ -38,6 +38,7 @@ class TextListAPIView(APIView):
             return Response(msg, status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request, map_id):
+        print(request.data)
         place = Place.objects.get(map_id=map_id)
         if place:
             serializer = TextCreateSerializer(data=request.data)

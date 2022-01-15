@@ -13,9 +13,8 @@ from rest_framework import viewsets
 class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
 
     def list(self, request):
-        print(request.POST)
+        print(request.method)
         print(request.data)
-        print(request.body)
         map_id = request.data['map_id']
         try:
             place = Place.objects.get(map_id=map_id)
