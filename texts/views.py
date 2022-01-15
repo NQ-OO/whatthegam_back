@@ -11,6 +11,13 @@ from whatthegam.models import Place
 class TextListAPIView(APIView):
 
     def get(self, request, map_id):
+        try:
+            place = Place.objects.get(map_id=map_id)
+        except:
+            place_serializer = PlaceSerializer(data=request.data)
+            if place_serializer.is_valid():
+                place_serializer.save()
+                
         place = Place.objects.get(map_id=map_id)
         texts = Text.objects.filter(written_place=place)
         if texts:
