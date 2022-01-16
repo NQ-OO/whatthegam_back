@@ -43,18 +43,20 @@ class TextListAPIView(APIView):
             for text in serializer.data:
                 context['data'].append({'data':text, 'pos':[text['x_axis'], text['y_axis']]})
             context['text_count'] = texts.count()
+
+            context['msg'] = f'{texts.count()}개의 낙서가 있는 장소입니다!'
+
             return Response(context, status=status.HTTP_200_OK)
         else:
             context = {'msg':'첫 번째 낙서를 남겨보세요!!'}
+
             context['text_count'] = texts.count()
-            context['data'] = []
+
+            context['data'] = [{'data':'-', 'pos':['-', '-']}]
             return Response(context, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, map_id):
-        try:
-            place = Place.objects.get(map_id=map_id)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        place = Place.objects.get(map_id=map_id)
         if place:
             # pos_list = request.data.pop('pos')
             # x_pos = pos_list[0]
@@ -66,7 +68,11 @@ class TextListAPIView(APIView):
                                 )
                 data = serializer.data
             context = {}
-            context = {'data':data, 'pos':[data['x_axis'], data['y_axis']]}
+            place = Place.objects.get(map_id=map_id)
+            # context = {'data':data, 'pos':[data['x_axis'], data['y_axis']]}
+            texts = Text.objects.filter(written_place=place)
+            serializer = TextSerializer(texts, many=True)
+            context = {'data':serializer.data}
             return Response(context, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
