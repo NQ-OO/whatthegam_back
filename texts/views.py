@@ -27,8 +27,12 @@ class TextCountAPIView(APIView):
 
 class TextListAPIView(APIView):
 
-    def get(self, request, map_id):                
-        place = Place.objects.get(map_id=map_id)
+    def get(self, request, map_id):
+        try:                
+            place = Place.objects.get(map_id=map_id)
+        except:
+            context = {'msg':'첫 번째 낙서를 남겨보세요!!'}
+            return Response(context, status=status.HTTP_204_NO_CONTENT)
         texts = Text.objects.filter(written_place=place)
         context = {}
         if texts:
