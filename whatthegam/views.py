@@ -27,7 +27,6 @@ class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
             serializer = PlaceSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-        print('여기가 맵'+map_id)
             
         return HttpResponseRedirect(reverse('texts:text_count', kwargs={'map_id':map_id})) 
 

@@ -9,10 +9,10 @@ class Text(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True) #작성자
     created_dt = models.DateTimeField(auto_now=True) #작성 시간
     written_place = models.ForeignKey(Place, on_delete=models.SET_NULL, related_name='texts', null=True) #작성 장소
-    x_axis = models.SmallIntegerField(default=4, validators=[
+    x_axis = models.IntegerField(default=4, validators=[
                                         MaxValueValidator(8), MinValueValidator(0)
     ]) # 보드 상의 x축 위치
-    y_axis = models.SmallIntegerField(default=15, validators=[
+    y_axis = models.IntegerField(default=15, validators=[
                                         MaxValueValidator(32), MinValueValidator(0)
     ]) # 보드 상의 y축 위치
     # spin_rate = models.FloatField(default=0.0, blank=True, null=True)

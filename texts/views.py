@@ -37,10 +37,11 @@ class TextListAPIView(APIView):
             context = {'data':[], 'msg':'첫 번째 낙서를 남겨 보세요!!'}
             return Response(context, status=status.HTTP_400_BAD_REQUEST)
         texts = Text.objects.filter(written_place=place)
-        context = {}
+        context = {'data':[], 'text_count':0}
         if texts:
             serializer = TextSerializer(texts, many=True)
-            context['data'] = serializer.data
+            for text in serializer.data:
+                context['data'].append({'data':text, 'pos':[text['x_axis'], text['y_axis']]})
             context['text_count'] = texts.count()
             return Response(context, status=status.HTTP_200_OK)
         else:
