@@ -56,18 +56,17 @@ class TextListAPIView(APIView):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         if place:
-            pos_list = request.data.pop('pos')
-            x_pos = pos_list[0]
-            y_pos = pos_list[1]
+            # pos_list = request.data.pop('pos')
+            # x_pos = pos_list[0]
+            # y_pos = pos_list[1]
             serializer = TextCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save(author=request.user,
                                 written_place=place,
-                                x_axis=x_pos,
-                                y_axis=y_pos
                                 )
+                data = serializer.data
             context = {}
-            context = {'data':serializer.data, 'pos':[x_pos, y_pos]}
+            context = {'data':data, 'pos':[data['x_axis'], data['y_axis']]}
             return Response(context, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
