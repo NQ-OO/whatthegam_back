@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from users.models import CustomUser
-
+from django.core.validators import MaxValueValidator, MinValueValidator
 from whatthegam.models import Place
 # Create your models here.
 class Text(models.Model):
@@ -9,9 +9,13 @@ class Text(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True) #작성자
     created_dt = models.DateTimeField(auto_now=True) #작성 시간
     written_place = models.ForeignKey(Place, on_delete=models.SET_NULL, related_name='texts', null=True) #작성 장소
-    x_axis = models.FloatField(default=0.0) # 보드 상의 x축 위치
-    y_axis = models.FloatField(default=0.0) # 보드 상의 y축 위치
-    spin_rate = models.FloatField(default=0.0, blank=True, null=True)
+    x_axis = models.SmallIntegerField(default=4, validators=[
+                                        MaxValueValidator(8), MinValueValidator(0)
+    ]) # 보드 상의 x축 위치
+    y_axis = models.SmallIntegerField(default=15, validators=[
+                                        MaxValueValidator(32), MinValueValidator(0)
+    ]) # 보드 상의 y축 위치
+    # spin_rate = models.FloatField(default=0.0, blank=True, null=True)
 
 
     def __str__(self):

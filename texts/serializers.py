@@ -22,7 +22,7 @@ class TextSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Text
-        fields = ('id', 'content', 'author', 'create_dt', 'written_place', 'x_axis', 'y_axis', 'spin_rate', 'author_year')
+        fields = ('id', 'content', 'author', 'create_dt', 'written_place', 'x_axis', 'y_axis', 'author_year')
     
     def get_author_year(self, obj):
         return obj.author.year
@@ -37,7 +37,7 @@ class TextCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Text
-        fields = ('id', 'content', 'author', 'create_dt', 'written_place', 'x_axis', 'y_axis', 'spin_rate', 'author_year')
+        fields = ('id', 'content', 'author', 'create_dt', 'written_place', 'x_axis', 'y_axis', 'author_year')
 
     def get_author_year(self, obj):
         print(obj.author)
@@ -45,6 +45,7 @@ class TextCreateSerializer(serializers.ModelSerializer):
 
     def get_create_dt(self, obj):
         return obj.created_dt.strftime("%Y-%m-%d %H:%M:%S")
+    
 
         
     # def update(self, instance, validated_data):

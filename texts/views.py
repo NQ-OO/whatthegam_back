@@ -7,6 +7,9 @@ from .models import Text
 from .serializers import *
 from whatthegam.models import Place
 import random
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import json
 
 class TextCountAPIView(APIView):
 
@@ -47,31 +50,44 @@ class TextListAPIView(APIView):
             return Response(context, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, map_id):
-        place = Place.objects.get(map_id=map_id)
+        try:
+            place = Place.objects.get(map_id=map_id)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         if place:
+            pos_list = request.data.pop('pos')
+            x_pos = pos_list[0]
+            y_pos = pos_list[1]
             serializer = TextCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save(author=request.user,
                                 written_place=place,
-                                spin_rate=round(random.uniform(0, 360), 2),
-                                x_axis=round(random.uniform(0,100), 2),
-                                y_axis=round(random.uniform(0,100), 2))
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                                x_axis=x_pos,
+                                y_axis=y_pos
+                                )
+            context = {}
+            context = {'data':serializer.data, 'pos':[x_pos, y_pos]}
+            return Response(context, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
 class TextDetailAPIView(APIView):
 
-
     def put(self, request, map_id, text_pk):
         place = Place.objects.get(map_id=map_id)
         text = get_object_or_404(Text, id=text_pk)
-
+        if place:
+            pos_list = request.data.pop('pos')
+            x_pos = pos_list[0]
+            y_pos = pos_list[1]
         serializer = TextCreateSerializer(text, data=request.data)
         if serializer.is_valid():
-            serializer.save(author=request.user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer.save(author=request.user,
+                                written_place=place,
+                                x_axis=x_pos,
+                                y_axis=y_pos)
+            context = {'data':serializer.data, 'pos':[x_pos, y_pos]}
+            return Response(context, status=status.HTTP_200_OK)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, map_id, text_pk):
