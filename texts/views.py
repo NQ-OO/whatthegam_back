@@ -31,8 +31,7 @@ class TextListAPIView(APIView):
         try:                
             place = Place.objects.get(map_id=map_id)
         except:
-            context = {'msg':'첫 번째 낙서를 남겨보세요!!'}
-            return Response(context, status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         texts = Text.objects.filter(written_place=place)
         context = {}
         if texts:
@@ -41,6 +40,7 @@ class TextListAPIView(APIView):
             context['text_count'] = texts.count()
             return Response(context, status=status.HTTP_200_OK)
         else:
+            context = {'msg':'첫 번째 낙서를 남겨보세요!!'}
             context['text_count'] = texts.count()
             context['data'] = []
             return Response(context, status=status.HTTP_204_NO_CONTENT)
