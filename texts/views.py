@@ -10,9 +10,13 @@ import random
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import json
+from rest_framework.permissions import AllowAny
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class TextCountAPIView(APIView):
-
+    permission_classes = [AllowAny, ]
     def get(self, request, map_id):
         place = Place.objects.get(map_id=map_id)
         text_count = Text.objects.filter(written_place=place).count()
@@ -27,8 +31,9 @@ class TextCountAPIView(APIView):
         
         return Response(context, status=status.HTTP_200_OK)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class TextListAPIView(APIView):
+    permission_classes = [AllowAny, ]
 
     def get(self, request, map_id):
         try:                
@@ -76,7 +81,7 @@ class TextListAPIView(APIView):
             return Response(context, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
-
+@method_decorator(csrf_exempt, name='dispatch')
 class TextDetailAPIView(APIView):
 
     def put(self, request, map_id, text_pk):

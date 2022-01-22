@@ -9,14 +9,17 @@ from django.urls import reverse
 from texts import urls
 from rest_framework import viewsets
 import json
+from rest_framework.permissions import AllowAny
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class PlaceAPIView(viewsets.ModelViewSet): #localhost:8000/
-
     def list(self, request):
         # print('place api view 시작부분')
 
-        data = json.loads(request.body.decode('utf-8'))
+        data = request.data
         map_id = data.get('map_id', None)
         print(map_id)
         # map_id = request.data['map_id']
